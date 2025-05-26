@@ -1,31 +1,39 @@
+from datetime import date
+# utilizamos datetime para consegui la fecha actual
+fecha_actual = date.today()
+# utilizamos la fecha_actual para conseguir el año
+año_actual = fecha_actual.year
+
 años_nacimiento = [1975, 1986, 1987, 1992, 1993, 1996]
 #años_nacimiento = []
+edad_integrantes = []
 año_par = int(0)
 año_impar = int(0)
-grupo_z = True #Comienza en True la funcion
+grupo_z = True          #Comienza en True la funcion
 hay_bisiesto = False
-cantidad_años = int(6) #solo para testeo
-# cantidad_años = int(0) #version que tiene que ir 
+cantidad_años = int(6)         #solo para testeo
+#cantidad_años = int(0)      #version que tiene que ir 
 
 def funcion_ingreso_años():
-    global cantidad_años #contador de la cantidad de años ingresados
+    global cantidad_años        #contador de la cantidad de años ingresados
     print("\n Ingrese los años de nacimiento de los integrantes del grupo, deben ser al menos dos\n para finalizar ingrese cualquier letra")
     año = input("Ingrese el año de nacimiento:\n")
-    while año.isdigit():    #Verifica que se hayan ingresado numeros solamente
+    while año.isdigit():        #Verifica que se hayan ingresado numeros solamente
         año = int(año)  
-        if año <= 2025:     #verifica si el año es menor a 2025
+        if año <= 2025:         #verifica si el año es menor o igual a 2025
             cantidad_años += 1
-            años_nacimiento.append(año)     #se agrega a la lista de años
+            años_nacimiento.append(año)         #se agrega a la lista de años
             año = input("Ingrese otro año:\n")
         else:
             año = input("Ingrese un año correcto:\n")
     print("Ingreso de años finalizado, volviendo al menu")
     menu()
 
+#funcion que llama a todas las funciones de operaciones con los años
 def funcion_operaciones_años():
     global años_nacimiento, grupo_z,hay_bisiesto, cantidad_años
-    print(f"Lista de años: {años_nacimiento}")
-    for i in range(0, cantidad_años):
+    print(f"Lista de años: {años_nacimiento}")          #muestra la lista de años ingresados
+    for i in range(0, cantidad_años):           #recorre la lista de años y las carga en las funciones
         año_par, año_impar = funcion_años_par_impar(años_nacimiento[i])
         grupo_z = funcion_grupo_z(años_nacimiento[i])
         hay_bisiesto = funcion_es_bisiesto(años_nacimiento[i])
@@ -38,7 +46,6 @@ def funcion_operaciones_años():
     if hay_bisiesto:
         print("Tenemos un año especial")
     menu()
-
 
 def funcion_años_par_impar(año):
     global año_par, año_impar
@@ -56,10 +63,19 @@ def funcion_grupo_z(año):
 
 def funcion_es_bisiesto(año):
     global hay_bisiesto
-    if año % 4 == 0 and (año % 100 != 0 or año % 400 == 0):
-        hay_bisiesto = True
+    if año % 4 == 0 and (año % 100 != 0 or año % 400 == 0):         #verifica que el año es bisiesto
+        hay_bisiesto = True         #Si al menos un año es bisiesto, pasa a True     
     return hay_bisiesto
 
+def funcion_producto_cartesiano():
+    global años_nacimiento, edad_integrantes, año_actual
+    años_nacimiento.sort()          #ordenamos la lista ingresada
+    #calculamos la edad de los integrantes
+    for i in range(cantidad_años):
+        edad = año_actual - años_nacimiento[i]
+        print(edad)
+        edad_integrantes.append(edad)
+    
 ###
 #def ingreso_automatico():
     #nombres_integrantes = ["GABRIEL", "GASPAR", "DIEGO", "HUGO", "MATIAS", "IGNACIO"]
@@ -77,10 +93,6 @@ def funcion_es_bisiesto(año):
 #    año_par, año_impar = funcion_operaciones_años(años_nacimiento[i])
 #    grupo_z = funcion_grupo_z(años_nacimiento[i])
 #    hay_bisiesto = funcion_es_bisiesto(años_nacimiento[i])
-
-
-
-
 
 # Menú con las distintas opciones para llamar a las diferenctes funciones.
 def menu():
@@ -106,9 +118,13 @@ def menu():
 
         if opcion == "C":
             funcion_ingreso_años()
+            
         
         elif opcion == "D":
             funcion_operaciones_años()
+        
+        elif opcion == "P":
+            funcion_producto_cartesiano()
         #elif opcion == "D":
         #    ingreso_automatico()
 
