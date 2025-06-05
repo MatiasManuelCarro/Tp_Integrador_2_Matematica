@@ -14,30 +14,21 @@ hay_bisiesto = False
 cantidad_años = int(0)      #version que tiene que ir 
 producto_cartesiano = []
 edad = int(0)
-cont = 0
+contador_grupos = 0
+
+#Se crea un diccionario vacio para los DNI
+indices = ["A", "B", "C", "D", "E", "F"]
+#diccionario_dnis = {indice: None for indice in indices}
+diccionario_dnis = {}
 
 
-def conj_dni(nombre, nro): # Esta función toma los nombres y nros de DNI y los traasforma a ConjuntoA = {1, 2, 3, 4, 5, 6, 7, 8}, que es lo que pide la consigna.
-    global cont 
-    cont += 1 # este contador está para que a partir de 2 se habiliten las operaciones, ya que debe haber por lo menos 2 conjuntos
-    a = str(nro)
+def conjuntos_dni(numero): # Esta función toma los nombres y nros de DNI y los traasforma a ConjuntoA = {1, 2, 3, 4, 5, 6, 7, 8}, que es lo que pide la consigna.
+    global contador_grupos, diccionario_dnis
+    a = str(numero)
     conjunto = {int(i) for i in a} # Aquí se itera sobre la variable a que es un strig pero guarda el entero en el conjunto, sin repetir.
-    diccio = {"Diego":"A", "Hugo":"B", "Matias":"C", "Ignacio":"D", "Gabriel":"E", "Gaspar":"F" } # Diccionario que adigna una letra a cada nombre ingresado para que se cumpla ConjuntoA = ....
-    # Aqui se hace una validació del nombre ingresado. El nombre ingresado debe pertenecer al grupo II.
-    if nombre in diccio.keys():
-        print(f"Conjunto {diccio[nombre]} = {conjunto}")
-    else:
-        print("Ingrese un nombre correcto")
-
-#funcion para obtener el conjunto de digitos unicos de un DNI
-#def conjunto_digitos(dni):
-#    conjunto = set()
-#    for digito in dni:
-#        if digito.isdigit():  # Verifica si el carácter es un dígito
-#            conjunto.add(digito)
-#    return conjunto  # Devuelve el conjunto de dígitos únicos
-
-
+    clave = indices[contador_grupos]
+    diccionario_dnis[clave] = conjunto
+    contador_grupos += 1 # este contador está para que a partir de 2 se habiliten las operaciones, ya que debe haber por lo menos 2 conjuntos
 
 
 #Esta funcion ingresa los datos de los integrantes del grupo de manera automatica
@@ -53,35 +44,37 @@ def ingreso_automatico():
     print("DNI Gabriel: 39352395 - Año nacimiento: 1996")                
     print("DNI Gaspar: 37050279 - Año nacimiento: 1992")
 
-    nombres_integrantes = ["Diego", "Hugo", "Matias", "Ignacio", "Gabriel", "Gaspar"]
+    #nombres_integrantes = ["Diego", "Hugo", "Matias", "Ignacio", "Gabriel", "Gaspar"]
     dni_integrantes = [32020446, 31879389, 37362003, 25002007, 39352395, 37050279]
     #años_nacimiento = [1975, 1986, 1987, 1992, 1993, 1996]
     print("\nConjuntos de los digitos unidos del DNI:\n")
     #ingreso de los datos: nombre y dni
     #carga todos los datos en la funcion de conjuntos
-    for nombres in nombres_integrantes:
-        conj_dni(nombres, dni_integrantes[i])
-        i += 1
+    for dni in dni_integrantes:
+        conjuntos_dni(dni)
+
+    print(diccionario_dnis)
+
     menu()
 
 
 
-def union(): # Funcion que dá el conjunto unión de todos los conjuntos
-    if cont >= 2: # Valida que haya 2 o mas conjuntos para hacer la operación
-        pass # Hacer la lógica
-    else:
-        print("No hay suficientes conjuntos para hacer la operación.")
+#def union(): # Funcion que dá el conjunto unión de todos los conjuntos
+#    if cont >= 2: # Valida que haya 2 o mas conjuntos para hacer la operación
+#        pass # Hacer la lógica
+#    else:
+#        print("No hay suficientes conjuntos para hacer la operación.")
 
-def ingresar_nombre(): # Función que pide el nombre de los integrantes del grupo II
-    nombre = input("\n""Ingrese su nombre: ").upper()
-    return nombre
+#def ingresar_nombre(): # Función que pide el nombre de los integrantes del grupo II
+#    nombre = input("\n""Ingrese su nombre: ").upper()
+#    return nombre
 
 def ingresar_dni(): # Esta función pide el número de DNI del integrante que ya ingresó su nombre
-    nro = input("\n""Ingrese su número de DNI: ")
-    while len(nro) != 8 or int(nro) < 0: # Aquí se valida que el número tenga 8 cifras y que sea positivo
+    numero_dni = input("\n""Ingrese su número de DNI: ")
+    while len(numero_dni) != 8 or int(numero_dni) < 0: # Aquí se valida que el número tenga 8 cifras y que sea positivo
         print("El número ingresado no tiene 8 dígitos o es negativo")
-        nro = input("Ingrese su número de DNI: ")
-    return nro
+        numero_dni = input("Ingrese su número de DNI: ")
+    return numero_dni
 
 #Aqui comienza la parte del programa que maneja las operacion con los años
 
@@ -163,6 +156,16 @@ def funcion_producto_cartesiano():
     for producto in producto_cartesiano:
         print(producto)
 
+def mostrar_operaciones(conj1, conj2):
+    print(f"\nOperaciones entre conjuntos {conj1} y {conj2}:")
+    print(f"Unión: {conj1 | conj2}")
+    print(f"Intersección: {conj1 & conj2}")
+    print(f"Diferencia  {conj1 - conj2}")
+    print(f"Diferencia {conj2 - conj1}")
+    print(f"Diferencia simétrica: {conj1 ^ conj2}")
+    
+#mostrar_operaciones(conjunto_digitos(dni1), conjunto_digitos(dni2))
+
 #Funcion que vuelve todos los datos ingresados como al inicio
 def funcion_eliminar_datos():
     global años_nacimiento, grupo_z, hay_bisiesto, cantidad_años, año_par, año_impar, años_nacimiento, edad_integrantes, producto_cartesiano
@@ -193,10 +196,12 @@ def menu():
         opcion = input(f"\n""Ingrese una opcion: ").upper()
     
         if opcion == "A":
-            conj_dni(ingresar_nombre(), ingresar_dni())  # Llamada a la función conj_dni que toma como argumentos los valores que devuelven las funciones ingresar_nombre e ingresar_dni
+            numero_dni = ingresar_dni()  # Llamada a la función conj_dni que toma como argumentos los valores que devuelven las funciones ingresar_nombre e ingresar_dni
+            conjuntos_dni(numero_dni)
+            print(diccionario_dnis)
 
-        elif opcion == "B":
-            union()      
+        #elif opcion == "B":
+            #union()      
         
         elif opcion == "C":
             funcion_ingreso_años()
