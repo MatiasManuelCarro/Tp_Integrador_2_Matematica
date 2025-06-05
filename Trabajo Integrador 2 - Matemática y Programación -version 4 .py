@@ -16,19 +16,18 @@ producto_cartesiano = []
 edad = int(0)
 contador_grupos = 0
 
-#Se crea un diccionario vacio para los DNI
-indices = ["A", "B", "C", "D", "E", "F"]
-#diccionario_dnis = {indice: None for indice in indices}
-diccionario_dnis = {}
+grupos = ["A", "B", "C", "D", "E", "F"]
+conjuntos_dni_integrantes = []
 
 
 def conjuntos_dni(numero): # Esta función toma los nombres y nros de DNI y los traasforma a ConjuntoA = {1, 2, 3, 4, 5, 6, 7, 8}, que es lo que pide la consigna.
-    global contador_grupos, diccionario_dnis
+    global contador_grupos, conjuntos_dni_integrantes
     a = str(numero)
     conjunto = {int(i) for i in a} # Aquí se itera sobre la variable a que es un strig pero guarda el entero en el conjunto, sin repetir.
-    clave = indices[contador_grupos]
-    diccionario_dnis[clave] = conjunto
-    contador_grupos += 1 # este contador está para que a partir de 2 se habiliten las operaciones, ya que debe haber por lo menos 2 conjuntos
+    conjuntos_dni_integrantes.append(conjunto)
+    #clave = indices[contador_grupos]
+    #diccionario_dnis[clave] = conjunto
+    #contador_grupos += 1 # este contador está para que a partir de 2 se habiliten las operaciones, ya que debe haber por lo menos 2 conjuntos
 
 
 #Esta funcion ingresa los datos de los integrantes del grupo de manera automatica
@@ -53,7 +52,10 @@ def ingreso_automatico():
     for dni in dni_integrantes:
         conjuntos_dni(dni)
 
-    print(diccionario_dnis)
+    #print(diccionario_dnis)
+    #print(conjuntos_dni_integrantes)
+    for i in range (6):
+        print(f"Conjunto {grupos[i]} = {conjuntos_dni_integrantes[i]}")
 
     menu()
 
@@ -156,13 +158,18 @@ def funcion_producto_cartesiano():
     for producto in producto_cartesiano:
         print(producto)
 
-def mostrar_operaciones(conj1, conj2):
-    print(f"\nOperaciones entre conjuntos {conj1} y {conj2}:")
-    print(f"Unión: {conj1 | conj2}")
-    print(f"Intersección: {conj1 & conj2}")
-    print(f"Diferencia  {conj1 - conj2}")
-    print(f"Diferencia {conj2 - conj1}")
-    print(f"Diferencia simétrica: {conj1 ^ conj2}")
+def mostrar_operaciones():
+    global grupos, conjuntos_dni_integrantes
+    for c in range(len(conjuntos_dni_integrantes)):
+        print(c)
+        conj1 = conjuntos_dni_integrantes[c]
+        conj2 = conjuntos_dni_integrantes[c+1]
+        print(f"\nOperaciones entre conjuntos {conj1} y {conj2}:")
+        print(f"Unión: {conj1 | conj2}")
+        print(f"Intersección: {conj1 & conj2}")
+        print(f"Diferencia  {conj1 - conj2}")
+        print(f"Diferencia {conj2 - conj1}")
+        print(f"Diferencia simétrica: {conj1 ^ conj2}")
     
 #mostrar_operaciones(conjunto_digitos(dni1), conjunto_digitos(dni2))
 
@@ -198,10 +205,10 @@ def menu():
         if opcion == "A":
             numero_dni = ingresar_dni()  # Llamada a la función conj_dni que toma como argumentos los valores que devuelven las funciones ingresar_nombre e ingresar_dni
             conjuntos_dni(numero_dni)
-            print(diccionario_dnis)
+            #print(diccionario_dnis)
 
-        #elif opcion == "B":
-            #union()      
+        elif opcion == "B":
+            mostrar_operaciones()     
         
         elif opcion == "C":
             funcion_ingreso_años()
