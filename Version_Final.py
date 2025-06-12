@@ -7,11 +7,13 @@
 #### FUNCIONES ####
 
 import os       #para limpiar la pantalla entre operaciones
-from datetime import date
+from datetime import date       
 # utilizamos datetime para consegui la fecha actual
 fecha_actual = date.today()
 # utilizamos la fecha_actual para conseguir el año
 año_actual = fecha_actual.year
+
+#Inicializacion de listas y variables 
 años_nacimiento = []
 edad_integrantes = []
 año_par = int(0)
@@ -55,7 +57,7 @@ def ingresar_dni(): # Esta función pide que se ingrese el numero de dni y verif
     nro = input("\n""Ingrese su número de DNI: ")
     if str(nro).upper() == "S":      #Si se ingresa "S" se frena el ingreso y vuelve al menu
         os.system('cls')        #se limpia la pantalla
-        menu()
+        menu()          #vuelve al menu
 
     while len(nro) != 8 or int(nro) < 0: # Aquí se valida que el número tenga 8 cifras y que sea positivo
         print("El número ingresado no tiene 8 dígitos o es negativo")
@@ -104,7 +106,7 @@ def suma_digitos(lista_dni):
     
 def funcion_ingreso_años():
     global cantidad_años
-    print("\n Ingrese los años de nacimiento de los integrantes del grupo, deben ser al menos dos\n para finalizar ingrese cualquier letra")
+    print("\n Ingrese los años de nacimiento de los integrantes del grupo, deben ser al menos dos\n para finalizar ingrese cualquier letra o simbolo")
     año = input("Ingrese el año de nacimiento:\n")
     while año.isdigit():        #Verifica que se hayan ingresado numeros solamente
         año = int(año)  
@@ -120,7 +122,7 @@ def funcion_ingreso_años():
     menu()
 
 
-def funcion_años_par_impar(año, año_par, año_impar):
+def funcion_años_par_impar(año, año_par, año_impar):        #Funcion que cuenta años pares e impares
     if año % 2 == 0:
         año_par += 1
     else:
@@ -129,7 +131,7 @@ def funcion_años_par_impar(año, año_par, año_impar):
 
 def funcion_grupo_z(año, grupo_z):
     if año < 2000:      #si alguno de los años es menor a 2000, el grupo no es Z
-        grupo_z = False     #Grupo z pasa a falso
+        grupo_z = False     #Grupo z pasa a falso, esta variable inicia en True. Si uno solo es menor a 2000, pasa a falso
     return grupo_z
 
 def funcion_es_bisiesto(año, hay_bisiesto):
@@ -166,6 +168,7 @@ def funcion_operaciones_años(años_nacimiento, grupo_z, hay_bisiesto, año_par,
 
     funcion_producto_cartesiano(años_nacimiento, año_actual, edad_integrantes)   #llama a la funcion de producto cartesiano
 
+    #Devuelve los resultados
     print(f"\nEn el grupo tenemos {año_par} integrantes que nacieron en año par y {año_impar} integrantes que nacieron en año impar")
     if grupo_z:
         print(f"el Grupo es \"Grupo Z\" ")
@@ -263,6 +266,7 @@ def menu():
         opcion = input("\n""Ingrese una opción A, B, C, D o S ( S para salir del programa): ").upper()
 
         if opcion == "A":
+            os.system('cls')        #Limpia la pantalla 
             print("Generación de conjuntos de dígitos únicos")
             global suma
             suma = 1
@@ -313,7 +317,7 @@ def menu():
 
         elif opcion == "S":
             print("Cerrando programa")
-            opcion == salida
+            exit()
 
         else:
             print("Ingrese una opción válida.")
