@@ -261,7 +261,7 @@ def menu():
         print("G - Mostrar evaluacion de condiciones logicas, con los DNIs de los integrantes del grupo")
         print("S- Salir del programa.")
 
-        opcion = input("\n""Ingrese una opción A, B, C, D o S ( S para salir del programa): ").upper()
+        opcion = input("\n""Ingrese una opción A, B, C, D, E, F, G o S ( S para salir del programa): ").upper()
 
         if opcion == "A":
             os.system('cls')        #Limpia la pantalla 
