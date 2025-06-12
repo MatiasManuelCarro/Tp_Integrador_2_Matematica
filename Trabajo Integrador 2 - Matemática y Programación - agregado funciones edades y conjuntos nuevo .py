@@ -1,9 +1,8 @@
+
 from datetime import date
 # utilizamos datetime para consegui la fecha actual
 fecha_actual = date.today()
-# utilizamos la fecha_actual para conseguir el año
 año_actual = fecha_actual.year
-#años_nacimiento = [1975, 1986, 1987, 1992, 1993, 1996]
 años_nacimiento = []
 edad_integrantes = []
 año_par = int(0)
@@ -13,6 +12,53 @@ hay_bisiesto = False
 #cantidad_años = int(6)         #solo para testeo
 cantidad_años = int(0)      #version que tiene que ir 
 producto_cartesiano = []
+cont = 0
+
+def conj_dni(nombre, nro): # Esta función toma los nombres y nros de DNI y los traasforma a ConjuntoA = {1, 2, 3, 4, 5, 6, 7, 8}, que es lo que pide la consigna.
+    global cont 
+    cont += 1 # este contador está para que a partir de 2 se habiliten las operaciones, ya que debe haber por lo menos 2 conjuntos
+    a = str(nro)
+    conjunto = {int(i) for i in a} # Aquí se itera sobre la variable a que es un strig pero guarda el entero en el conjunto, sin repetir.
+    diccio = {"GABRIEL":"A", "GASPAR":"B", "DIEGO":"C", "HUGO":"D", "MATIAS":"E", "IGNACIO":"F" } # Diccionario que adigna una letra a cada nombre ingresado para que se cumpla ConjuntoA = ....
+    # Aqui se hace una validació del nombre ingresado. El nombre ingresado debe pertenecer al grupo II.
+    if nombre in diccio.keys():
+        print(f"Conjunto {diccio[nombre]} = {conjunto}")
+    else:
+        print("Ingrese un nombre correcto")
+
+#Esta funcion ingresa los datos de los integrantes del grupo de manera automatica
+def ingreso_automatico():
+    global años_nacimiento
+    nombres_integrantes = ["GABRIEL", "GASPAR", "DIEGO", "HUGO", "MATIAS", "IGNACIO"]
+    dni_integrantes = [39352395, 32789456, 32020446, 31879389, 37362003, 25002007]
+    años_nacimiento = [1975, 1986, 1987, 1992, 1993, 1996]
+    print("Ingreso automatico de los integrantes del grupo:\n")
+    #ingreso de los datos: nombre y dni
+    for nombres in nombres_integrantes:
+        for dni in dni_integrantes:
+            conj_dni(nombres, dni)
+    menu()
+
+
+
+def union(): # Funcion que dá el conjunto unión de todos los conjuntos
+    if cont >= 2: # Valida que haya 2 o mas conjuntos para hacer la operación
+        pass # Hacer la lógica
+    else:
+        print("No hay suficientes conjuntos para hacer la operación.")
+
+def ingresar_nombre(): # Función que pide el nombre de los integrantes del grupo II
+    nombre = input("\n""Ingrese su nombre: ").upper()
+    return nombre
+
+def ingresar_dni(): # Esta función pide el número de DNI del integrante que ya ingresó su nombre
+    nro = input("\n""Ingrese su número de DNI: ")
+    while len(nro) != 8 or int(nro) < 0: # Aquí se valida que el número tenga 8 cifras y que sea positivo
+        print("El número ingresado no tiene 8 dígitos o es negativo")
+        nro = input("Ingrese su número de DNI: ")
+    return nro
+
+#Aqui comienza la parte del programa que maneja las operacion con los años
 
 def funcion_ingreso_años():
     global cantidad_años        #contador de la cantidad de años ingresados
@@ -23,21 +69,27 @@ def funcion_ingreso_años():
         if año <= 2025:         #verifica si el año es menor o igual a 2025
             cantidad_años += 1
             años_nacimiento.append(año)         #se agrega a la lista de años
-            año = input("Ingrese otro año:\n")
+            año = input("Ingrese otro año, recuerdo que para finalizar debe ingresar cualquier letra\n")
         else:
             año = input("Ingrese un año correcto:\n")
     print("Ingreso de años finalizado, volviendo al menu")
     menu()
 
-#funcion que llama a todas las funciones de operaciones con los años
+#funcion que llama a todas las funciones de operaciones con los años y muestra los resultados
 def funcion_operaciones_años():
     global años_nacimiento, grupo_z, hay_bisiesto, cantidad_años, año_par, año_impar, años_nacimiento, edad_integrantes, año_actual, producto_cartesiano
+    if len(años_nacimiento) < 2:
+        print("No hay suficientes años ingresados para realizar las operaciones, por favor ingrese mas. \nvolviendo al menu")
+        menu()
+        
     for año in años_nacimiento:           #recorre la lista de años y las carga en las funciones
         año_par, año_impar = funcion_años_par_impar(año, año_par, año_impar)
         grupo_z = funcion_grupo_z(año, grupo_z)
         hay_bisiesto = funcion_es_bisiesto(año, hay_bisiesto)
+    #llama a la funcion producto cartesiano
     producto_cartesiano = funcion_producto_cartesiano()
 
+    #mostramos los resultados
     print(f"\nEn el grupo tenemos {año_par} integrantes que nacieron en año par y {año_impar} integrantes que nacieron en año impar")
     if grupo_z:
         print(f"el Grupo es \"Grupo Z\" ")
@@ -71,44 +123,19 @@ def funcion_producto_cartesiano():
     #calculamos la edad de los integrantes
     for año in años_nacimiento:
         edad_integrantes.append(año_actual - año)
-
     #mostramos las listas de años y edades
     print(f"La lista de años de nacimiento es: {años_nacimiento}")
-    print(f"La lista de las edades de los integrantes es: {edad_integrantes}")
-    
+    print(f"La lista de las edades de los integrantes es: {edad_integrantes}")    
+
     #ciclo que genera los conjuntos cartesiano
     for año in años_nacimiento:
         for edad in edad_integrantes:
             producto_cartesiano.append((año, edad))
     
-    #mostralos los productos
+    #mostramos los productos cartesianos
     print("\nLos productos cartesianos entre los años y las edades son:")
     for producto in producto_cartesiano:
         print(producto)
-
-
-
-    
-    
-
-    
-###
-#def ingreso_automatico():
-    #nombres_integrantes = ["GABRIEL", "GASPAR", "DIEGO", "HUGO", "MATIAS", "IGNACIO"]
-    #dni_integrantes = [39352395, 32789456, 32020446, 31879389, 37362003, 25002007]
-    
-#    for i in range(0, 6):
-#        funcion_operaciones_años(años_nacimiento[i])
-
-    #print("Ingreso automatico de los integrantes del grupo:\n")
-    #for i in range (0, 5):
-    #    conj_dni(nombres_integrantes[i], dni_integrantes[i])
-###
-
-#for i in range(0,6):
-#    año_par, año_impar = funcion_operaciones_años(años_nacimiento[i])
-#    grupo_z = funcion_grupo_z(años_nacimiento[i])
-#    hay_bisiesto = funcion_es_bisiesto(años_nacimiento[i])
 
 # Menú con las distintas opciones para llamar a las diferenctes funciones.
 def menu():
@@ -126,22 +153,23 @@ def menu():
     
         opcion = input(f"\n""Ingrese una opcion: ").upper()
     
-        #if opcion == "A":
-        #    conj_dni(ingresar_nombre(), ingresar_dni())  # Llamada a la función conj_dni que toma como argumentos los valores que devuelven las funciones ingresar_nombre e ingresar_dni
+        if opcion == "A":
+            conj_dni(ingresar_nombre(), ingresar_dni())  # Llamada a la función conj_dni que toma como argumentos los valores que devuelven las funciones ingresar_nombre e ingresar_dni
 
-        #elif opcion == "B":
-        #    union()
-
-        if opcion == "C":
-            funcion_ingreso_años()
-            
+        elif opcion == "B":
+            union()      
         
+        elif opcion == "C":
+            funcion_ingreso_años()
+
         elif opcion == "D":
             funcion_operaciones_años()
+
+        elif opcion == "E":
+            ingreso_automatico()
         
-        elif opcion == "P":
-            funcion_producto_cartesiano()
-        #elif opcion == "D":
-        #    ingreso_automatico()
+        elif opcion == "S":
+            print("Cerrando programa")
+            exit()
 
 menu()
