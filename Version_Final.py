@@ -1,5 +1,3 @@
-#Poniendo En Orden
-
 # Trabajo para la Semana de Integración II de Matemáticas.
 
 # Grupo II: Matías Carro, Hugo Catalán; Gaspar Compagnucci, Gabriel Carbajal, Diego Carrizo e Ignacio Carné.
