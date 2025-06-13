@@ -36,5 +36,8 @@ Al aplicar lo aprendido en programacion pudimos resolver de manera mas eficiente
 ## 🔗 Link al video del trabajo practico:
 https://www.youtube.com/watch?v=nmt41-6QCaU
 
+## 🔗 Link al documento del trabajo practico:
+https://github.com/MatiasManuelCarro/Tp_Integrador_2_Matematica/blob/main/TP%20Integrador%20N%C2%B02-%20MATEM%C3%81TICA%20-%20%20Diego%20Carrizo%2C%20Hugo%20Catalan%2C%20Matias%20Carro%2C%20Ignacio%20Carn%C3%A9%2C%20Gabriel%20Carbajal%20.pdf
+
 
 
