@@ -18,7 +18,7 @@ Este programa pertenece al Trabajo Practico integrador 2 de Matematica.
 
 ## 💾 Como fue Desarrollado este programa
 
-Este programa fue desarrollado en conjunto, dividiendo las tareas en pequeñas funciones que resolvieran los ejercicios propuestos, repartiendonos las tareas entre los integrantes y luego conbinando los codigos de cada uno, en un esfuerzo grupal. 
+Este programa fue desarrollado en Python, trabajando en conjunto, dividiendo las tareas en pequeñas funciones que resolvieran los ejercicios propuestos, repartiendonos las tareas entre los integrantes y luego conbinando los codigos de cada uno, en un esfuerzo grupal. 
 
 ## 📕 Librerias requeridas:
 
