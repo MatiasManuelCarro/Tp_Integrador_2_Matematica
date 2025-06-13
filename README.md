@@ -4,11 +4,12 @@
     Universidad Tecnológica Nacional
 
 ## 👤 Alumnos:
-Diego Carrizo
-Hugo Catalan
-Matias Carro
-Ignacio Carné
-Gabriel Carbajal
+Diego Carrizo <br/>
+Hugo Catalan <br/>
+Matias Carro <br/>
+Ignacio Carné <br/>
+Gabriel Carbajal <br/>
+
 
 
 ## 📌 Introduccion
